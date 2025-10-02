@@ -1,0 +1,739 @@
+/* Rectangle 1 */
+body {
+   background: #F4AE20;
+}
+.container {
+    position: relative;
+    margin: 0 auto;
+    width: 80%;
+    height: 600px;
+}
+#page {
+    position: absolute;
+    width: 1908px;
+    height: 1185px;
+    background: #F3CC90;
+}
+
+/* Rectangle 2 */
+#top_box {
+    position: absolute;
+    width: 1908px;
+    height: 113px;
+
+    background: #000000;
+}
+
+/* Virtual Wardrobe */
+ h1 {
+    position: absolute;
+
+    width: 2000px;
+    height: 100.04px;
+    top:-60px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100px;
+    line-height: 121px;
+    line-height: 100%;
+     text-align: center;
+     vertical-align: top;
+
+
+    color: #F5F5F5;
+}
+/* Information */
+
+h2 {
+    position: absolute;
+    width: 2000px;
+    height:100.04px;
+    top:95px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 85px;
+    line-height: 103px;
+    text-align: center;
+    vertical-align: top;
+
+    color: white;
+    left: inherit;
+}
+
+
+
+
+.user_txt {
+    text-align: left;
+    font-size: 20px;
+    vertical-align: text-top;
+    overflow-wrap: normal;
+    font-size-adjust: inherit;
+    inline-size: 450px;
+    overflow: hidden;
+    text-align: left;
+}
+
+
+
+/* virtualw 1 */
+
+#logo {
+    position: absolute;
+    width: 281px;
+    height: 158px;
+    top: -20px;
+    left: -80px;
+    background: url(images/virtualw.png);
+}
+
+/* image 1 */
+
+#profile_icon {
+    position: absolute;
+    width: 10px;
+    height: 5px;
+    top: 165px;
+    left: 1765px;
+
+    background: url(images/profile_icon.png);
+
+}
+
+/* Rectangle 10 */
+
+#page_background {
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 1806px;
+    height: 819px;
+    left: 49px;
+    top: 250px;
+
+    background: url(images/info_background.png);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* Frame 10 */
+/*intructions box*/
+
+#instruction_title {
+    position: absolute;
+    width: 286px;
+    height: 62px;
+    left: 875px;
+    top: 54px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 100px;
+}
+
+/* Rectangle 14 */
+
+#help_question_box {
+    position: absolute;
+    width: 452px;
+    height: 175px;
+    left: 1300px;
+    top: 406px;
+
+
+    background: #D9D9D9;
+}
+/*Submit*/
+#submit_button {
+    position: absolute;
+    width: 157px;
+    height: 45px;
+    left: 1600px;
+    top: 610px;
+
+    background: #FFD92A;
+    border-radius: 22.5px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
+}
+/* Email */
+
+#email_title {
+    position: absolute;
+    width: 218px;
+    height: 64px;
+    left: 1225px;
+    top: 243px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* Rectangle 13 */
+
+#email_box {
+    position: absolute;
+    width: 452px;
+    height: 70px;
+    left: 1300px;
+    top: 285px;
+
+    background: #D9D9D9;
+}
+
+/* Ellipse 1 */
+/*
+#bethany_pic {
+    position: absolute;
+    width: 178px;
+    height: 168px;
+    left: 120px;
+    top: 556px;
+
+    background: url(images/profile_icon.png);
+}
+*/
+/* Ellipse 4 */
+/*
+#bismah_pic {
+    position: absolute;
+    width: 178px;
+    height: 168px;
+    left: 493px;
+    top: 556px;
+
+    background: url(images/profile_icon.png);
+}
+*/
+/* Ellipse 2 */
+/*
+#aadiba_pic {
+    position: absolute;
+    width: 80px;
+    height: 86px;
+    left: 866px;
+    top: 556px;
+
+    background: url(images/profile_icon.png);
+}
+*/
+/* Ellipse 3 */
+/*
+#nakeya_pic {
+    position: absolute;
+    width: 178px;
+    height: 168px;
+    left: 1238px;
+    top: 568px;
+
+    background: url(images/profile_icon.png);
+}
+*/
+/* Ellipse 5 */
+/*
+#dorothy_pic {
+    position: absolute;
+    width: 178px;
+    height: 174px;
+    left: 118px;
+    top: 568px;
+
+    background: url(images/profile_icon.png);
+}
+*/
+/* Rectangle 5
+
+#bethany_social {
+    position: absolute;
+    width: 80px;
+    height: 86px;
+    left: 220px;
+    top: 678px;
+
+    background: url(images/socials_icon.png);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+ Rectangle 6
+
+#bismah_social {
+    position: absolute;
+    width: 80px;
+    height: 86px;
+    left: 592px;
+    top: 678px;
+
+    background: url(images/socials_icon.png);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+ Rectangle 8
+
+#aadiba_social {
+    position: absolute;
+    width: 80px;
+    height: 86px;
+    left: 971px;
+    top: 678px;
+
+    background: url(images/socials_icon.png);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+ Rectangle 9
+
+#nakeya_social {
+    position: absolute;
+    width: 80px;
+    height: 86px;
+    left: 1350px;
+    top: 678px;
+
+    background: url(images/socials_icon.png);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+*/
+
+/* vw social media */
+
+#vw_social {
+    position: absolute;
+    width: 224px;
+    height: 39px;
+    left: 1133px;
+    top: 1080px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* faq */
+
+#faq {
+    position: absolute;
+    width: 47px;
+    height: 39px;
+    left: 1538px;
+    top: 1080px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* Frame 4 */
+
+#nakeya_title {
+    position: absolute;
+    width: 278px;
+    height: 60px;
+    left: 1134px;
+    top: 750px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 25px;
+}
+
+/* Frame 5 */
+
+#aadiba_title {
+    position: absolute;
+    width: 287px;
+    height: 60px;
+    left: 761px;
+    top: 750px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 25px;
+}
+
+/* Frame 3 */
+
+#bismah_title {
+    position: absolute;
+    width: 284px;
+    height: 60px;
+    left: 389px;
+    top: 750px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 25px;
+}
+
+/* Frame 6 */
+
+#bethany_title {
+    position: absolute;
+    width: 282px;
+    height: 60px;
+    left: 16px;
+    top: 750px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 25px;
+}
+
+/* Frame 2 */
+
+#dorothy_title {
+    position: absolute;
+    width: 288px;
+    height: 60px;
+    left: 1500px;
+    top: 750px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 25px;
+}
+
+/* Frame 7 */
+
+#team_bband_title {
+    position: absolute;
+    width: 244px;
+    height: 61px;
+    left: 842px;
+    top: 650px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 100px;
+}
+
+/* Frame 8 */
+
+#contact_us_title {
+    position: absolute;
+    width: 286px;
+    height: 62px;
+    left: 1383px;
+    top: 54px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 100px;
+}
+
+/* Rectangle 11 */
+
+#first_name_box {
+    position: absolute;
+    width: 219px;
+    height: 70px;
+    left: 1300px;
+    top: 158px;
+
+    background: #D9D9D9;
+}
+
+/* Rectangle 12 */
+
+#last_name_box {
+    position: absolute;
+    width: 220px;
+    height: 70px;
+    left: 1532px;
+    top: 158px;
+
+    background: #D9D9D9;
+}
+
+/* First Name */
+
+#first_name_title {
+    position: absolute;
+    width: 218px;
+    height: 64px;
+    left: 1271px;
+    top: 119px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* Last Name */
+
+#last_name_title {
+    position: absolute;
+    width: 218px;
+    height: 64px;
+    left: 1495px;
+    top: 115px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* What can we help you with? */
+
+#help_question_title {
+    position: absolute;
+    width: 528px;
+    height: 64px;
+    left: 1238px;
+    top: 368px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* Rectangle 16 */
+
+#video_demo_box {
+    position: absolute;
+    width: 604px;
+    height: 394px;
+    left: 131px;
+    top: 123px;
+
+    background: #D9D9D9;
+}
+
+/* Frame 9 */
+
+#video_demo_title {
+    position: absolute;
+    width: 286px;
+    height: 62px;
+    left: 290px;
+    top: 54px;
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    background: #FFD92A;
+    border-radius: 100px;
+}
+
+/* Rectangle 17 */
+
+#instruction_box {
+    position: absolute;
+    width: 309px;
+    height: 347px;
+    left: 863px;
+    top: 84px;
+
+    background: #F3CC90;
+    position: absolute;
+    width: 311px;
+    height: 300px;
+    left: 863px;
+    top: 140px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+
+    color: #000000;
+}
+
+/* vw@bband.org */
+
+#vw_email_footer {
+    position: absolute;
+    width: 207px;
+    height: 39px;
+    left: 357px;
+    top: 1080px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* 123-456-7890 */
+
+#vw_number_footer {
+    position: absolute;
+    width: 196px;
+    height: 39px;
+    left: 756px;
+    top: 1080px;
+
+    font-family: 'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #000000;
+}
+
+
+/* Rectangle 15 */
+
+#email_icon {
+    position: absolute;
+    width: 78px;
+    height: 70px;
+    left: 279px;
+    top: 1070px;
+
+    background: url(images/email_icon.png);
+}
+
+/* Rectangle 18 */
+
+#phone_icon {
+    position: absolute;
+    width: 79px;
+    height: 76px;
+    left: 665px;
+    top: 1070px;
+
+    background: url(images/phone_icon.png);
+}
+
+/* Rectangle 19 */
+
+#social_icon_footer {
+    position: absolute;
+    width: 80px;
+    height: 86px;
+    left: 1053px;
+    top: 1070px;
+
+    background: url(images/socials_icon.png);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* Rectangle 20 */
+
+#faq_icon_footer {
+    position: absolute;
+    width: 84px;
+    height: 74px;
+    left: 1442px;
+    top: 1070px;
+
+    background: url(images/faq_icon.png);
+}
+.nav-bar {
+    position: absolute;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    background-color: #DD6FAB;
+    width: 100%;
+    padding: 10px;
+    font-family: 'Inconsolata', serif;
+    top: 115px;
+    width: 1888px;
+    height:50px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Irish Grover';
+  font-size: 30px;
+  text-align: center;
+
+}

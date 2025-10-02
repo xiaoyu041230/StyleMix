@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!-- Query for View Closet stylesheet -->
+    <link rel="stylesheet" href="../static/home_page.css">
+    <link rel="stylesheet" href="aesthetics.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Irish+Grover" />
+    <!-- Media query for small browser width -->
+    <link rel="stylesheet" media="only screen and (max-width: 480px)" href="../static/small.css" />
+    <!-- Media query for medium browser width -->
+    <link rel="stylesheet" media="only screen and (min-width: 481px) and (max-width: 960px)" href="../static/medium.css" />
+    <!-- Media query for large browser width -->
+    <link rel="stylesheet" media="only screen and (min-width: 961px)" href="../static/large.css" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.login_button2').addEventListener('click', login);
+        });
+
+        function login() {
+        // Get the values entered by the user
+        var username = document.getElementsByName("username")[0].value;
+        var password = document.getElementsByName("password")[0].value;
+
+        // You can perform an AJAX request here to send the login data to the server for authentication
+
+        // For demonstration purposes, check if the username and password are correct
+        // Replace this with your own authentication logic
+        if (username === "sample_user" && password === "abcde123") {
+        // Redirect to the home_page.html after successful login
+        window.location.href = "../pages/home_page.html";
+        } else {
+        // Show an error message if the credentials are incorrect
+        alert("Invalid username or password.");
+        }
+    }
+    </script>
+
+
+</head>
+
+<body>
+  <div class="container">
+    <div id="foreground">
+      <div id="title">
+          <div id="navigation">
+        <h1>Virtual Wardrobe</h1>
+        <div id="logo">
+          <img src = "../static/images/virtualw.png" alt="logo" width=281 height="158">
+        </div>
+              </div>
+          <nav class="nav-bar">
+            <div class=" nav-option">
+                <ul>
+                    <a href="login_page.html">
+                        Login
+                    </a>
+                </ul>
+            </div>
+
+            <div class=" nav-option">
+                <ul>
+                <a href="info-page.html">
+                    Info
+                </a>
+                </ul>
+            </div>
+
+            <div class=" nav-option">
+                <ul>
+            <a href = "UploadCloset.html">
+               Upload
+            </a>
+                    </ul>
+            </div>
+            <div class=" nav-option">
+                <ul>
+                <a href="view_closet.html">
+                    View
+                </a>
+                    </ul>
+            </div>
+
+            <div class="nav-option">
+                <ul>
+                <a href="aesthetics.html">
+                Aesthetics Quiz
+                </a>
+
+                    </ul>
+            </div>
+        </nav>
+          <h2>Login</h2>
+        <div id="webpage">
+            <h3 id="sign_up_here_text">New to virtual wardrobe? Sign up here!</h3>
+            <div id="box" class="login-box">
+                <label for="username_font"><b>Username</b></label>
+                <input type="text" placeholder="Enter username" name="username" required>
+                <label for="password_font"><b>Password</b></label>
+                <input type="password" placeholder="Enter password" name="password" required>
+                <button class="login_button2">Login</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</body>
+</body>
+</html>
