@@ -12,6 +12,7 @@ import {useUser} from '@clerk/clerk-react'
 import Layout from './pages/Layout' 
 
 const App = () => {
+  const {user} = useUser()
   return (
     <>
       <Routes>
