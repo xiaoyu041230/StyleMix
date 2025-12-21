@@ -58,110 +58,110 @@ const dummyUser3Data = {
 }
 
 export const dummyStoriesData = [
-  // ✅ Item (image) - 带 metadata
-  {
-    "_id": "story_item_1",
-    "user": dummyUserData,
-    "kind": "item",
-    "content": "",
+    // ✅ Item (image) - 带 metadata
+    {
+        "_id": "story_item_1",
+        "user": dummyUserData,
+        "kind": "item",
+        "content": "",
 
-    "media_url": "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg",
-    "media_type": "image",
+        "media_url": "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg",
+        "media_type": "image",
 
-    "item_metadata": {
-      "title": "Cream Knit Sweater",
-      "category": "tops",
-      "color": "Cream",
-      "brand": "Uniqlo",
-      "season": "Fall/Winter",
-      "tags": ["minimal", "cozy", "daily"],
-      "link": "https://example.com/product/knit-sweater"
+        "item_metadata": {
+            "title": "Cream Knit Sweater",
+            "category": "tops",
+            "color": "Cream",
+            "brand": "Uniqlo",
+            "season": "Fall/Winter",
+            "tags": ["minimal", "cozy", "daily"],
+            "link": "https://example.com/product/knit-sweater"
+        },
+
+        "background_color": "#4f46e5",
+        "createdAt": "2025-07-25T08:16:06.958Z",
+        "updatedAt": "2025-07-25T08:16:06.958Z",
     },
 
-    "background_color": "#4f46e5",
-    "createdAt": "2025-07-25T08:16:06.958Z",
-    "updatedAt": "2025-07-25T08:16:06.958Z",
-  },
+    // ✅ Media (image) - 纯图片
+    {
+        "_id": "story_media_img_1",
+        "user": dummyUserData,
+        "kind": "media",
+        "content": "",
 
-  // ✅ Media (image) - 纯图片
-  {
-    "_id": "story_media_img_1",
-    "user": dummyUserData,
-    "kind": "media",
-    "content": "",
+        "media_url": "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
+        "media_type": "image",
 
-    "media_url": "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
-    "media_type": "image",
-
-    "background_color": "#4f46e5",
-    "createdAt": "2025-07-25T08:27:48.134Z",
-    "updatedAt": "2025-07-25T08:27:48.134Z",
-  },
-
-  // ✅ Media (video) - 纯视频
-  {
-    "_id": "story_media_vid_1",
-    "user": dummyUserData,
-    "kind": "media",
-    "content": "",
-
-    "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
-    "media_type": "video",
-
-    "background_color": "#4f46e5",
-    "createdAt": "2025-07-25T08:27:21.289Z",
-    "updatedAt": "2025-07-25T08:27:21.289Z",
-  },
-
-  // ✅ Item (video) - 带 metadata + 视频
-  {
-    "_id": "story_item_2",
-    "user": dummyUser2Data,
-    "kind": "item",
-    "content": "",
-
-    "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
-    "media_type": "video",
-
-    "item_metadata": {
-      "title": "Black Leather Boots",
-      "category": "shoes",
-      "color": "Black",
-      "brand": "Dr. Martens",
-      "season": "Fall/Winter",
-      "tags": ["street", "edgy"],
-      "link": "https://example.com/product/boots"
+        "background_color": "#4f46e5",
+        "createdAt": "2025-07-25T08:27:48.134Z",
+        "updatedAt": "2025-07-25T08:27:48.134Z",
     },
 
-    "background_color": "#4f46e5",
-    "createdAt": "2025-07-25T08:19:31.080Z",
-    "updatedAt": "2025-07-25T08:19:31.080Z",
-  },
+    // ✅ Media (video) - 纯视频
+    {
+        "_id": "story_media_vid_1",
+        "user": dummyUserData,
+        "kind": "media",
+        "content": "",
 
-  // ✅ Item (image) - 换个用户再来一个
-  {
-    "_id": "story_item_3",
-    "user": dummyUser3Data,
-    "kind": "item",
-    "content": "",
+        "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
+        "media_type": "video",
 
-    "media_url": "https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg",
-    "media_type": "image",
-
-    "item_metadata": {
-      "title": "Wide-Leg Jeans",
-      "category": "bottoms",
-      "color": "Blue",
-      "brand": "Levi's",
-      "season": "All Season",
-      "tags": ["casual", "basic"],
-      "link": ""
+        "background_color": "#4f46e5",
+        "createdAt": "2025-07-25T08:27:21.289Z",
+        "updatedAt": "2025-07-25T08:27:21.289Z",
     },
 
-    "background_color": "#4f46e5",
-    "createdAt": "2025-07-25T08:13:18.111Z",
-    "updatedAt": "2025-07-25T08:13:18.111Z",
-  },
+    // ✅ Item (video) - 带 metadata + 视频
+    {
+        "_id": "story_item_2",
+        "user": dummyUser2Data,
+        "kind": "item",
+        "content": "",
+
+        "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
+        "media_type": "video",
+
+        "item_metadata": {
+            "title": "Black Leather Boots",
+            "category": "shoes",
+            "color": "Black",
+            "brand": "Dr. Martens",
+            "season": "Fall/Winter",
+            "tags": ["street", "edgy"],
+            "link": "https://example.com/product/boots"
+        },
+
+        "background_color": "#4f46e5",
+        "createdAt": "2025-07-25T08:19:31.080Z",
+        "updatedAt": "2025-07-25T08:19:31.080Z",
+    },
+
+    // ✅ Item (image) - 换个用户再来一个
+    {
+        "_id": "story_item_3",
+        "user": dummyUser3Data,
+        "kind": "item",
+        "content": "",
+
+        "media_url": "https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg",
+        "media_type": "image",
+
+        "item_metadata": {
+            "title": "Wide-Leg Jeans",
+            "category": "bottoms",
+            "color": "Blue",
+            "brand": "Levi's",
+            "season": "All Season",
+            "tags": ["casual", "basic"],
+            "link": ""
+        },
+
+        "background_color": "#4f46e5",
+        "createdAt": "2025-07-25T08:13:18.111Z",
+        "updatedAt": "2025-07-25T08:13:18.111Z",
+    },
 ]
 
 
@@ -233,7 +233,99 @@ export const dummyPostsData = [
         "likes_count": [],
         "createdAt": "2025-07-09T09:27:47.529Z",
         "updatedAt": "2025-07-09T09:27:47.529Z",
+    },
+
+    // ✅ text + item (text optional)
+    {
+        "_id": "post_item_1",
+        "user": dummyUserData,
+        "content": "Trying a cozy minimal look today ✨ #minimal #dailyfit",
+        "image_urls": [
+            "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg"
+        ],
+        "post_type": "text_with_item",
+        "item": {
+            "title": "Cream Knit Sweater",
+            "category": "tops",
+            "color": "Cream",
+            "brand": "Uniqlo",
+            "season": "Fall/Winter",
+            "tags": ["minimal", "cozy", "daily"],
+            "link": "https://example.com/product/knit-sweater"
+        },
+        "likes_count": [],
+        "createdAt": "2025-07-26T10:12:31.191Z",
+        "updatedAt": "2025-07-26T10:12:31.191Z"
+    },
+
+    // ✅ item only (no text) - but still uses your PostCard item display
+    {
+        "_id": "post_item_2",
+        "user": dummyUser2Data,
+        "content": "",
+        "image_urls": [
+            "https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg"
+        ],
+        "post_type": "item",
+        "item": {
+            "title": "Wide-Leg Jeans",
+            "category": "bottoms",
+            "color": "Blue",
+            "brand": "Levi's",
+            "season": "All Season",
+            "tags": ["casual", "basic"],
+            "link": ""
+        },
+        "likes_count": [],
+        "createdAt": "2025-07-26T09:02:47.213Z",
+        "updatedAt": "2025-07-26T09:02:47.213Z"
+    },
+
+    // ✅ text + item (no image_urls) - to test “item card only” UI
+    {
+        "_id": "post_item_3",
+        "user": dummyUser3Data,
+        "content": "These boots make every outfit look sharper. #street #edgy",
+        "image_urls": [],
+        "post_type": "text_with_item",
+        "item": {
+            "title": "Black Leather Boots",
+            "category": "shoes",
+            "color": "Black",
+            "brand": "Dr. Martens",
+            "season": "Fall/Winter",
+            "tags": ["street", "edgy"],
+            "link": "https://example.com/product/boots"
+        },
+        "likes_count": [],
+        "createdAt": "2025-07-26T12:44:08.626Z",
+        "updatedAt": "2025-07-26T12:44:08.626Z"
+    },
+
+    // ✅ text + item + multiple images - to test grid layout
+    {
+        "_id": "post_item_4",
+        "user": dummyUserData,
+        "content": "Mixing neutrals with a pop of color 🎨 #outfit #color",
+        "image_urls": [
+            "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
+            "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg"
+        ],
+        "post_type": "text_with_item",
+        "item": {
+            "title": "Oversized Blazer",
+            "category": "outerwear",
+            "color": "Gray",
+            "brand": "ZARA",
+            "season": "Spring/Fall",
+            "tags": ["workwear", "neutral", "layering"],
+            "link": "https://example.com/product/blazer"
+        },
+        "likes_count": [],
+        "createdAt": "2025-07-26T15:27:47.529Z",
+        "updatedAt": "2025-07-26T15:27:47.529Z"
     }
+
 ]
 
 export const dummyRecentMessagesData = [
@@ -306,7 +398,7 @@ export const dummyMessagesData = [
         "createdAt": "2025-07-25T10:44:12.753Z",
         "updatedAt": "2025-07-25T10:44:12.753Z",
     },
-        {
+    {
         "_id": "6878cc2817a54e4d3748010c",
         "from_user_id": "user_2zdFoZib5lNr614LgkONdD8WG32",
         "to_user_id": "user_2zwZSCMRXQ9GaEEVLgm6akQo96i",

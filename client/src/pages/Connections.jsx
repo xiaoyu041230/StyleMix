@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Connections = () => {
+const Connection = () => {
   return (
     <div>
     </div>
   )
 }
 
-export default Connections
+export default Connection

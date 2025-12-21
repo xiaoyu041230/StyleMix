@@ -3,8 +3,6 @@ import { BadgeCheck, X } from 'lucide-react'
 
 const StoryViewer = ({ viewStory, setViewStory }) => {
 
-    const [progress, setProgress] = useState(0)
-
   if (!viewStory) return null
 
   const handleClose = () => {
