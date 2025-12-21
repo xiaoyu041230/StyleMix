@@ -58,66 +58,110 @@ const dummyUser3Data = {
 }
 
 export const dummyStoriesData = [
-    {
-        "_id": "68833d466e4b42b685068860",
-        "user": dummyUserData,
-        "content": "📌 This isn't the story I wanted to tell… not yet. But if you're reading this, know that something interesting is in motion 🔄. The next post will make more sense 🧩.",
-        "media_url": "",
-        "media_type": "text",
-        "background_color": "#4f46e5",
-        "createdAt": "2025-07-25T08:16:06.958Z",
-        "updatedAt": "2025-07-25T08:16:06.958Z",
+  // ✅ Item (image) - 带 metadata
+  {
+    "_id": "story_item_1",
+    "user": dummyUserData,
+    "kind": "item",
+    "content": "",
+
+    "media_url": "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg",
+    "media_type": "image",
+
+    "item_metadata": {
+      "title": "Cream Knit Sweater",
+      "category": "tops",
+      "color": "Cream",
+      "brand": "Uniqlo",
+      "season": "Fall/Winter",
+      "tags": ["minimal", "cozy", "daily"],
+      "link": "https://example.com/product/knit-sweater"
     },
-    {
-        "_id": "688340046e4b42b685068a73",
-        "user": dummyUserData,
-        "content": "",
-        "media_url": "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
-        "media_type": "image",
-        "background_color": "#4f46e5",
-        "createdAt": "2025-07-25T08:27:48.134Z",
-        "updatedAt": "2025-07-25T08:27:48.134Z",
+
+    "background_color": "#4f46e5",
+    "createdAt": "2025-07-25T08:16:06.958Z",
+    "updatedAt": "2025-07-25T08:16:06.958Z",
+  },
+
+  // ✅ Media (image) - 纯图片
+  {
+    "_id": "story_media_img_1",
+    "user": dummyUserData,
+    "kind": "media",
+    "content": "",
+
+    "media_url": "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
+    "media_type": "image",
+
+    "background_color": "#4f46e5",
+    "createdAt": "2025-07-25T08:27:48.134Z",
+    "updatedAt": "2025-07-25T08:27:48.134Z",
+  },
+
+  // ✅ Media (video) - 纯视频
+  {
+    "_id": "story_media_vid_1",
+    "user": dummyUserData,
+    "kind": "media",
+    "content": "",
+
+    "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
+    "media_type": "video",
+
+    "background_color": "#4f46e5",
+    "createdAt": "2025-07-25T08:27:21.289Z",
+    "updatedAt": "2025-07-25T08:27:21.289Z",
+  },
+
+  // ✅ Item (video) - 带 metadata + 视频
+  {
+    "_id": "story_item_2",
+    "user": dummyUser2Data,
+    "kind": "item",
+    "content": "",
+
+    "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
+    "media_type": "video",
+
+    "item_metadata": {
+      "title": "Black Leather Boots",
+      "category": "shoes",
+      "color": "Black",
+      "brand": "Dr. Martens",
+      "season": "Fall/Winter",
+      "tags": ["street", "edgy"],
+      "link": "https://example.com/product/boots"
     },
-    {
-        "_id": "68833fe96e4b42b685068a5e",
-        "user": dummyUserData,
-        "content": "",
-        "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
-        "media_type": "video",
-        "background_color": "#4f46e5",
-        "createdAt": "2025-07-25T08:27:21.289Z",
-        "updatedAt": "2025-07-25T08:27:21.289Z",
+
+    "background_color": "#4f46e5",
+    "createdAt": "2025-07-25T08:19:31.080Z",
+    "updatedAt": "2025-07-25T08:19:31.080Z",
+  },
+
+  // ✅ Item (image) - 换个用户再来一个
+  {
+    "_id": "story_item_3",
+    "user": dummyUser3Data,
+    "kind": "item",
+    "content": "",
+
+    "media_url": "https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg",
+    "media_type": "image",
+
+    "item_metadata": {
+      "title": "Wide-Leg Jeans",
+      "category": "bottoms",
+      "color": "Blue",
+      "brand": "Levi's",
+      "season": "All Season",
+      "tags": ["casual", "basic"],
+      "link": ""
     },
-    {
-        "_id": "68833e136e4b42b685068937",
-        "user": dummyUserData,
-        "content": "",
-        "media_url": "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg",
-        "media_type": "image",
-        "background_color": "#4f46e5",
-        "createdAt": "2025-07-25T08:19:31.080Z",
-        "updatedAt": "2025-07-25T08:19:31.080Z",
-    },
-    {
-        "_id": "68833d706e4b42b685068875",
-        "user": dummyUserData,
-        "content": "🤫 Not every moment needs to be loud. Sometimes, the best things happen in silence — in drafts 📝, in progress 🧪, in planning 📊. That's where I am right now.",
-        "media_url": "",
-        "media_type": "text",
-        "background_color": "#4f46e5",
-        "createdAt": "2025-07-25T08:16:48.617Z",
-        "updatedAt": "2025-07-25T08:16:48.617Z",
-    },
-    {
-        "_id": "68833c9e6e4b42b6850687e7",
-        "user": dummyUserData,
-        "content": "✨ Something meaningful is on the way. I'm working behind the scenes 🛠️ to bring it all together. This space is just the beginning 🌱. Stay tuned 👀.",
-        "media_url": "",
-        "media_type": "text",
-        "background_color": "#4f46e5",
-        "createdAt": "2025-07-25T08:13:18.111Z",
-        "updatedAt": "2025-07-25T08:13:18.111Z",
-    }
+
+    "background_color": "#4f46e5",
+    "createdAt": "2025-07-25T08:13:18.111Z",
+    "updatedAt": "2025-07-25T08:13:18.111Z",
+  },
 ]
 
 
