@@ -1,221 +1,149 @@
-using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
-using System.Security.Claims;
+// using Microsoft.AspNetCore.Mvc;
+// using System.Text.Json;
 
-// ===== Models =====
-public class StoryDoc
-{
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; } = "";
+// [ApiController]
+// [Route("api/posts")]
+// public class PostsController : ControllerBase
+// {
+//     private readonly ICurrentUser _currentUser;
+//     private readonly IPostRepository _posts;
+//     private readonly IUserRepository _users;
+//     private readonly IImageUploader _uploader;
 
-    [BsonElement("user")]
-    public string UserId { get; set; } = "";
+//     public PostsController(
+//         ICurrentUser currentUser,
+//         IPostRepository posts,
+//         IUserRepository users,
+//         IImageUploader uploader)
+//     {
+//         _currentUser = currentUser;
+//         _posts = posts;
+//         _users = users;
+//         _uploader = uploader;
+//     }
 
-    [BsonElement("content")]
-    public string? Content { get; set; }
+//     // =========================
+//     // Add Post (multiple images)
+//     // Node: req.files + imagekit upload + Post.create
+//     // =========================
+//     [HttpPost("add")]
+//     [RequestSizeLimit(100_000_000)]
+//     public async Task<IActionResult> AddPost(
+//         [FromForm] string? content,
+//         [FromForm] string post_type,
+//         [FromForm] List<IFormFile>? images)
+//     {
+//         try
+//         {
+//             var userId = _currentUser.UserId;
 
-    [BsonElement("media_url")]
-    public string? MediaUrl { get; set; }
+//             var imageUrls = new List<string>();
 
-    [BsonElement("media_type")]
-    public string MediaType { get; set; } = "image"; // image / video
+//             if (images != null && images.Count > 0)
+//             {
+//                 // Node: Promise.all(images.map(async ... upload ...))
+//                 var uploadTasks = images.Select(async img =>
+//                 {
+//                     // 这里等价 imagekit.upload + imagekit.url transform
+//                     // 你可以在 uploader 里实现 imagekit folder="posts" + webp + width=1280 + quality=auto
+//                     return await _uploader.UploadAndGetUrlAsync(img, folder: "posts");
+//                 });
 
-    [BsonElement("background_color")]
-    public string? BackgroundColor { get; set; }
+//                 imageUrls = (await Task.WhenAll(uploadTasks)).ToList();
+//             }
 
-    [BsonElement("createdAt")]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-}
+//             var post = new PostEntity
+//             {
+//                 UserId = userId,
+//                 Content = content ?? "",
+//                 ImageUrls = imageUrls,
+//                 PostType = post_type
+//             };
 
-public class UserDoc
-{
-    [BsonId]
-    public string Id { get; set; } = "";
+//             await _posts.CreateAsync(post);
 
-    [BsonElement("connections")]
-    public List<string> Connections { get; set; } = new();
+//             return Ok(new { success = true, message = "Post created successfully" });
+//         }
+//         catch (Exception ex)
+//         {
+//             Console.WriteLine(ex);
+//             return Ok(new { success = false, message = ex.Message });
+//         }
+//     }
 
-    [BsonElement("following")]
-    public List<string> Following { get; set; } = new();
-}
+//     // =========================
+//     // Get Feed Posts
+//     // Node: userIds = [me, ...connections, ...following]
+//     // Post.find({user: {$in: userIds}}).populate('user').sort({createdAt:-1})
+//     // =========================
+//     [HttpGet("feed")]
+//     public async Task<IActionResult> GetFeedPosts()
+//     {
+//         try
+//         {
+//             var userId = _currentUser.UserId;
 
-// ===== Image Storage Abstraction (ImageKit/S3/...) =====
-public record UploadResult(string Url);
+//             var user = await _users.FindByIdAsync(userId);
+//             if (user == null)
+//                 return Ok(new { success = false, message = "User not found" });
 
-public interface IImageStorage
-{
-    Task<UploadResult> UploadAsync(IFormFile file, string folder, CancellationToken ct);
-}
+//             var userIds = new HashSet<string> { userId };
 
-// Demo placeholder
-public class DummyImageStorage : IImageStorage
-{
-    public Task<UploadResult> UploadAsync(IFormFile file, string folder, CancellationToken ct)
-        => Task.FromResult(new UploadResult($"https://example.com/{folder}/{Guid.NewGuid()}"));
-}
+//             // Node: ...user.connections, ...user.following
+//             if (user.Connections != null)
+//                 foreach (var id in user.Connections) userIds.Add(id);
 
-// ===== Background Scheduler (replace Inngest) =====
-// 你可以实现成：Hangfire / Quartz.NET / Azure Functions / Inngest 替代方案
-public interface IBackgroundScheduler
-{
-    Task ScheduleStoryDeletionAsync(string storyId, TimeSpan delay, CancellationToken ct);
-}
+//             if (user.Following != null)
+//                 foreach (var id in user.Following) userIds.Add(id);
 
-// Demo placeholder scheduler (does not really persist jobs!)
-public class DummyBackgroundScheduler : IBackgroundScheduler
-{
-    public Task ScheduleStoryDeletionAsync(string storyId, TimeSpan delay, CancellationToken ct)
-    {
-        // Real impl: enqueue a delayed job to delete storyId after delay
-        return Task.CompletedTask;
-    }
-}
+//             // Repo 做：查 posts where UserId in userIds, sort desc, 并“populate user”
+//             var posts = await _posts.FindFeedPostsAsync(userIds.ToList());
 
-// ===== Repositories =====
-public class StoryRepository
-{
-    private readonly IMongoCollection<StoryDoc> _stories;
+//             return Ok(new { success = true, posts });
+//         }
+//         catch (Exception ex)
+//         {
+//             Console.WriteLine(ex);
+//             return Ok(new { success = false, message = ex.Message });
+//         }
+//     }
 
-    public StoryRepository(IMongoDatabase db)
-    {
-        _stories = db.GetCollection<StoryDoc>("stories");
+//     // =========================
+//     // Like / Unlike Post
+//     // Node: if includes -> remove else push
+//     // =========================
+//     [HttpPost("like")]
+//     public async Task<IActionResult> LikePost([FromBody] LikePostRequest body)
+//     {
+//         try
+//         {
+//             var userId = _currentUser.UserId;
+//             var postId = body.PostId;
 
-        // 推荐索引：按 user + createdAt
-        _stories.Indexes.CreateOne(new CreateIndexModel<StoryDoc>(
-            Builders<StoryDoc>.IndexKeys
-                .Ascending(s => s.UserId)
-                .Descending(s => s.CreatedAt)
-        ));
-    }
+//             var post = await _posts.FindByIdAsync(postId);
+//             if (post == null)
+//                 return Ok(new { success = false, message = "Post not found" });
 
-    public Task InsertAsync(StoryDoc story) => _stories.InsertOneAsync(story);
+//             // Node: post.likes_count.includes(userId)
+//             var alreadyLiked = post.LikesCount.Contains(userId);
 
-    public async Task<List<StoryDoc>> FindFeedAsync(IEnumerable<string> userIds)
-        => await _stories.Find(s => userIds.Contains(s.UserId))
-                         .SortByDescending(s => s.CreatedAt)
-                         .ToListAsync();
-
-    public Task DeleteByIdAsync(string storyId)
-        => _stories.DeleteOneAsync(s => s.Id == storyId);
-}
-
-public class UserRepository
-{
-    private readonly IMongoCollection<UserDoc> _users;
-    public UserRepository(IMongoDatabase db) => _users = db.GetCollection<UserDoc>("users");
-
-    public async Task<UserDoc?> FindByIdAsync(string id)
-        => await _users.Find(u => u.Id == id).FirstOrDefaultAsync();
-}
-
-// ===== DTOs =====
-public class CreateStoryRequest
-{
-    [FromForm(Name = "content")]
-    public string? Content { get; set; }
-
-    [FromForm(Name = "media_type")]
-    public string MediaType { get; set; } = "image"; // image / video
-
-    [FromForm(Name = "background_color")]
-    public string? BackgroundColor { get; set; }
-
-    // form-data name="media"
-    [FromForm(Name = "media")]
-    public IFormFile? Media { get; set; }
-}
-
-// ===== Controller =====
-[ApiController]
-[Route("api/stories")]
-public class StoriesController : ControllerBase
-{
-    private readonly StoryRepository _storyRepo;
-    private readonly UserRepository _userRepo;
-    private readonly IImageStorage _imageStorage;
-    private readonly IBackgroundScheduler _scheduler;
-
-    public StoriesController(
-        StoryRepository storyRepo,
-        UserRepository userRepo,
-        IImageStorage imageStorage,
-        IBackgroundScheduler scheduler)
-    {
-        _storyRepo = storyRepo;
-        _userRepo = userRepo;
-        _imageStorage = imageStorage;
-        _scheduler = scheduler;
-    }
-
-    // POST /api/stories
-    // multipart/form-data: content, media_type, background_color, media(file)
-    [HttpPost]
-    [Consumes("multipart/form-data")]
-    public async Task<IActionResult> AddUserStory([FromForm] CreateStoryRequest req, CancellationToken ct)
-    {
-        var userId = GetUserIdFromClaims();
-        if (string.IsNullOrEmpty(userId))
-            return Unauthorized(new { success = false, message = "Unauthorized" });
-
-        string? mediaUrl = null;
-
-        // upload media to ImageKit/storage
-        if ((req.MediaType == "image" || req.MediaType == "video") && req.Media is not null)
-        {
-            var upload = await _imageStorage.UploadAsync(req.Media, folder: "stories", ct);
-            mediaUrl = upload.Url;
-        }
-
-        var story = new StoryDoc
-        {
-            Id = ObjectId.GenerateNewId().ToString(),
-            UserId = userId,
-            Content = req.Content,
-            MediaType = req.MediaType,
-            MediaUrl = mediaUrl,
-            BackgroundColor = req.BackgroundColor,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        await _storyRepo.InsertAsync(story);
-
-        // schedule deletion after 24 hours (like inngest)
-        await _scheduler.ScheduleStoryDeletionAsync(story.Id, TimeSpan.FromHours(24), ct);
-
-        return Ok(new { success = true });
-    }
-
-    // GET /api/stories/feed
-    [HttpGet("feed")]
-    public async Task<IActionResult> GetStories()
-    {
-        var userId = GetUserIdFromClaims();
-        if (string.IsNullOrEmpty(userId))
-            return Unauthorized(new { success = false, message = "Unauthorized" });
-
-        var user = await _userRepo.FindByIdAsync(userId);
-        if (user is null)
-            return NotFound(new { success = false, message = "User not found" });
-
-        // self + connections + following
-        var userIds = new HashSet<string> { userId };
-        foreach (var id in user.Connections) userIds.Add(id);
-        foreach (var id in user.Following) userIds.Add(id);
-
-        var stories = await _storyRepo.FindFeedAsync(userIds);
-
-        // 你 Node 里 populate('user')，这里先不做 populate（Mongo Driver 没有内置）
-        // 真实做法：二次查询 users 再组装 DTO
-        return Ok(new { success = true, stories });
-    }
-
-    private string? GetUserIdFromClaims()
-    {
-        return User.FindFirstValue(ClaimTypes.NameIdentifier)
-            ?? User.FindFirstValue("sub")
-            ?? User.FindFirstValue("userId");
-    }
-}
+//             if (alreadyLiked)
+//             {
+//                 post.LikesCount = post.LikesCount.Where(id => id != userId).ToList();
+//                 await _posts.UpdateAsync(post);
+//                 return Ok(new { success = true, message = "Post unliked" });
+//             }
+//             else
+//             {
+//                 post.LikesCount.Add(userId);
+//                 await _posts.UpdateAsync(post);
+//                 return Ok(new { success = true, message = "Post liked" });
+//             }
+//         }
+//         catch (Exception ex)
+//         {
+//             Console.WriteLine(ex);
+//             return Ok(new { success = false, message = ex.Message });
+//         }
+//     }
+// }
