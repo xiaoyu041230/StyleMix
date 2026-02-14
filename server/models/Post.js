@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const postSchema = new mongoose.Schema({
   user: { type: String, ref: 'User', required: true },
   content: { type: String },
@@ -14,5 +16,6 @@ const postSchema = new mongoose.Schema({
   likes_count: [{ type: String, ref: 'User' }],
 }, { timestamps: true, minimize: false });
 
-postSchema.index({ user: 1, createdAt: -1 });
-postSchema.index({ item_id: 1 });
+const Post = mongoose.model('Post', postSchema)
+
+export default Post;
