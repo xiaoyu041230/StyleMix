@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { useRef } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Login from './pages/Login'
 import Feed from './pages/Feed' 
 import Messages from './pages/Messages' 
@@ -12,16 +12,27 @@ import {useUser, useAuth} from '@clerk/clerk-react'
 import Layout from './pages/Layout' 
 import {Toaster} from 'react-hot-toast'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { fetchUser } from './features/user/userSlice'
 
 const App = () => {
   const {user} = useUser()
   const {getToken } = useAuth()
+  const {pathname} = useLocation()
+  const pathnameRef = useRef(pathname)
+
+  const dispatch = useDispatch()
 
   useEffect(()=>{
-    if(user){
-      getToken().then((token)=>console.log(token))
+    const fetchData = async () => {
+      if(user){
+      const token = await getToken()
+      dispatch(fetchUser(token))
+      }
     }
-  })
+    fetchData()
+    
+  },[user, getToken, dispatch])
 
   return (
     <>
