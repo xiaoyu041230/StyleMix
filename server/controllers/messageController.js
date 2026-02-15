@@ -1,149 +1,112 @@
-// using Microsoft.AspNetCore.Mvc;
-// using System.Text.Json;
+import fs from "fs";
+import imagekit from "../configs/imageKit.js";
+import Message from "../models/Message.js";
 
-// [ApiController]
-// [Route("api/messages")]
-// public class MessagesController : ControllerBase
-// {
-//     private readonly IMessageRepository _repo;
-//     private readonly IImageUploader _uploader;
-//     private readonly ICurrentUser _currentUser;
+// Create an empty object to store SS Event connections
+const connections = {}; 
 
-//     public MessagesController(IMessageRepository repo, IImageUploader uploader, ICurrentUser currentUser)
-//     {
-//         _repo = repo;
-//         _uploader = uploader;
-//         _currentUser = currentUser;
-//     }
+// Controller function for the SSE endpoint
+export const sseController = (req, res)=>{
+    const { userId } = req.params
+    console.log('New client connected : ', userId)
 
-//     // SSE endpoint: GET /api/messages/sse/{userId}
-//     [HttpGet("sse/{userId}")]
-//     public async Task Sse([FromRoute] string userId)
-//     {
-//         Console.WriteLine($"New client connected: {userId}");
+    // Set SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
-//         Response.Headers["Content-Type"] = "text/event-stream";
-//         Response.Headers["Cache-Control"] = "no-cache";
-//         Response.Headers["Connection"] = "keep-alive";
-//         Response.Headers["Access-Control-Allow-Origin"] = "*";
+    // Add the client's response object to the connections object
+    connections[userId] = res
 
-//         SseConnections.Connections[userId] = Response;
+    // Send an initial event to the client
+    res.write('log: Connected to SSE stream\n\n');
 
-//         // initial event
-//         await Response.WriteAsync("event: log\ndata: Connected to SSE stream\n\n");
-//         await Response.Body.FlushAsync();
+    // Handle client disconnection
+    req.on('close', ()=>{
+        // Remove the client's response object from the connections array
+        delete connections[userId];
+        console.log('Client disconnected');
+    })
+}
 
-//         // handle disconnect
-//         try
-//         {
-//             // 保持连接：等到客户端断开（CancellationToken 触发）
-//             while (!HttpContext.RequestAborted.IsCancellationRequested)
-//             {
-//                 await Task.Delay(15000, HttpContext.RequestAborted);
-//                 // 可选：心跳包，防止代理断开
-//                 await Response.WriteAsync("event: ping\ndata: {}\n\n");
-//                 await Response.Body.FlushAsync();
-//             }
-//         }
-//         catch
-//         {
-//             // ignored
-//         }
-//         finally
-//         {
-//             SseConnections.Connections.TryRemove(userId, out _);
-//             Console.WriteLine("Client disconnected");
-//         }
-//     }
+// Send Message
+export const sendMessage = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        const { to_user_id, text } = req.body;
+        const image = req.file;
 
-//     // Send Message: POST /api/messages/send (multipart/form-data or json)
-//     // - text 在 body
-//     // - image 在 form file（等价 req.file）
-//     [HttpPost("send")]
-//     [RequestSizeLimit(50_000_000)]
-//     public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest body, [FromForm] IFormFile? image)
-//     {
-//         try
-//         {
-//             var userId = _currentUser.UserId;
-//             var toUserId = body.ToUserId;
-//             var text = body.Text;
+        let media_url = '';
+        let message_type = image ? 'image' : 'text';
 
-//             string? mediaUrl = null;
-//             var messageType = image != null ? "image" : "text";
+        if(message_type === 'image'){
+            const response = await imagekit.files.upload({
+                file: fs.createReadStream(image.path),
+                fileName: image.originalname,
+            });
+            media_url = imagekit.url({
+                path: response.filePath,
+                transformation: [
+                    {quality: 'auto'},
+                    {format: 'webp'},
+                    {width: '1280'}
+                ]
+            })
+        }
 
-//             if (messageType == "image" && image != null)
-//             {
-//                 mediaUrl = await _uploader.UploadAndGetUrlAsync(image);
-//             }
+        const message = await Message.create({
+            from_user_id: userId,
+            to_user_id,
+            text,
+            message_type,
+            media_url
+        })
 
-//             var message = await _repo.CreateAsync(new MessageEntity
-//             {
-//                 FromUserId = userId,
-//                 ToUserId = toUserId,
-//                 Text = text,
-//                 MessageType = messageType,
-//                 MediaUrl = mediaUrl
-//             });
+        res.json({ success: true, message });
 
-//             // 先返回给发送方
-//             // （你 Node 里 res.json -> success true）
-//             var responsePayload = new { success = true, message };
+        // Send message to to_user_id using SSE
 
-//             // 再 SSE 推给接收方（populate from_user_id）
-//             var messageWithUser = await _repo.FindByIdWithFromUserAsync(message.Id);
-//             if (messageWithUser != null && SseConnections.Connections.TryGetValue(toUserId, out var receiverRes))
-//             {
-//                 var json = JsonSerializer.Serialize(messageWithUser);
-//                 await receiverRes.WriteAsync($"data: {json}\n\n");
-//                 await receiverRes.Body.FlushAsync();
-//             }
+        const messageWithUserData = await Message.findById(message._id).populate('from_user_id');
 
-//             return Ok(responsePayload);
-//         }
-//         catch (Exception ex)
-//         {
-//             Console.WriteLine(ex);
-//             return Ok(new { success = false, message = ex.Message });
-//         }
-//     }
+        if(connections[to_user_id]){
+           connections[to_user_id].write(`data: ${JSON.stringify(messageWithUserData)}\n\n`)
+        }
 
-//     // Get Chat Messages: POST /api/messages/chat
-//     [HttpPost("chat")]
-//     public async Task<IActionResult> GetChatMessages([FromBody] GetChatMessagesRequest body)
-//     {
-//         try
-//         {
-//             var userId = _currentUser.UserId;
-//             var toUserId = body.ToUserId;
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+}
 
-//             // Node: sort({created_at: -1}) 你这里字段是 CreatedAt
-//             var messages = await _repo.FindChatMessagesAsync(userId, toUserId);
+// Get Chat Messages
+export const getChatMessages = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        const { to_user_id } = req.body;
 
-//             // mark seen
-//             await _repo.MarkSeenAsync(fromUserId: toUserId, toUserId: userId);
+        const messages = await Message.find({
+            $or: [
+                {from_user_id: userId, to_user_id},
+                {from_user_id: to_user_id, to_user_id: userId},
+            ]
+        }).sort({created_at: -1})
+        // mark messages as seen
+        await Message.updateMany({from_user_id: to_user_id, to_user_id: userId}, {seen: true})
 
-//             return Ok(new { success = true, messages });
-//         }
-//         catch (Exception ex)
-//         {
-//             return Ok(new { success = false, message = ex.Message });
-//         }
-//     }
+        res.json({ success: true, messages });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
 
-//     // Get User Recent Messages: GET /api/messages/recent
-//     [HttpGet("recent")]
-//     public async Task<IActionResult> GetUserRecentMessages()
-//     {
-//         try
-//         {
-//             var userId = _currentUser.UserId;
-//             var messages = await _repo.FindRecentMessagesToUserAsync(userId);
-//             return Ok(new { success = true, messages });
-//         }
-//         catch (Exception ex)
-//         {
-//             return Ok(new { success = false, message = ex.Message });
-//         }
-//     }
-// }
+export const getUserRecentMessages = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        const messages = await Message.find({to_user_id: userId}).populate('from_user_id to_user_id').sort({ created_at: -1 });
+
+        res.json({ success: true, messages });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
