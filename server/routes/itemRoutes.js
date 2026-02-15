@@ -5,7 +5,7 @@ import { upload } from "../configs/multer.js";
 
 const itemRouter = express.Router();
 
-itemRouter.post("/", protect, upload.array("images", 5), protect, createItem);
+itemRouter.post("/", protect, upload.array("images", 5), createItem);
 itemRouter.get("/mine", protect, getMyItems);
 
 export default itemRouter;
