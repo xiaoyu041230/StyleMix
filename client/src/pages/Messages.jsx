@@ -2,10 +2,35 @@ import React from 'react'
 import { dummyConnectionsData } from '../assets/assets'
 import { Eye, MessageSquare } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from "@clerk/clerk-react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
+import { useEffect, useState } from 'react';
+
 
 const Messages = () => {
 
   const navigate = useNavigate()
+  const { getToken } = useAuth();
+  const [users, setUsers] = useState([]);
+
+  const fetchConversations = async () => {
+    try {
+      const token = await getToken();
+      const { data } = await api.get("/api/message/conversations", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (data?.success) setUsers(data.users || []);
+      else toast.error(data?.message || "Failed to load conversations");
+    } catch (e) {
+      toast.error(e?.message || "Failed to load conversations");
+    }
+  };
+
+  useEffect(() => {
+    fetchConversations();
+  }, []);
 
   return (
     <div className='min-h-screen relative bg-slate-50'>
@@ -13,12 +38,11 @@ const Messages = () => {
         {/* Title */}
         <div className='mb-8'>
           <h1 className='text-3xl font-bold text-slate-900 mb-2'>Messages</h1>
-          <p className='text-slate-600'>Talk to your friends and family</p>
+          <p className='text-slate-600'>Talk to your friends</p>
         </div>
 
-        {/* Connected Users */}
         <div className='flex flex-col gap-3'>
-          {dummyConnectionsData.map((user)=>(
+          {users.map((user)=>(
             <div key={user._id} className='max-w-xl flex flex-warp gap-5 p-6 bg-white shadow rounded-md'>
               <img src={user.profile_picture} alt="" className='rounded-full size-12 mx-auto'/>
               <div className='flex-1'>
